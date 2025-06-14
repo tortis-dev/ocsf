@@ -8,8 +8,8 @@ A C#/.Net implementation of the Open Cybersecurity Schema Framework (OCSF) for c
 // Create a user access management event for assigning privileges
 var user = new User 
 {
-    UserId = "john.doe",
-    UserName = "John Doe",
+    Uid = "john.doe",
+    Name = "John Doe",
     Domain = "example.com"
 };
 
