@@ -3,8 +3,12 @@ name: Build, Test, and Publish
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'TortisDev.Ocsf/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'TortisDev.Ocsf/**'
   workflow_dispatch:
 
 jobs:
