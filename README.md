@@ -43,3 +43,13 @@ await producer.ProduceAsync("user-access-events", new Message<string, string>
 ```
 
 This example demonstrates creating an event that logs when a user is granted read and write privileges to a specific resource and publishing the event to a Kafka topic using the Confluent.Kafka client.
+
+### Validation
+
+It is recommended to validate the event before publishing.
+
+```csharp
+IEnumerable<ValidationResult> results = userAccessEvent.Validate();
+
+bool isValid = !results.Any();
+```
