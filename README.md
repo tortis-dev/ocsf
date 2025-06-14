@@ -22,11 +22,24 @@ var resources = new[]
     }
 };
 
-var event = new UserAccessManagementEvent(user, UserAccessManagementEvent.Activity.AssignPrivileges)
+var userAccessEvent = new UserAccessManagementEvent(user, UserAccessManagementEvent.Activity.AssignPrivileges)
 {
     Resources = resources,
     Privileges = new[] { "read", "write" }
 };
+
+// Publishing the event to Kafka
+using var producer = new ProducerBuilder<string, string>(producerConfig).Build();
+var jsonString = JsonSerializer.Serialize(userAccessEvent, new JsonSerializerOptions 
+{ 
+    WriteIndented = true 
+});
+
+await producer.ProduceAsync("user-access-events", new Message<string, string> 
+{ 
+    Key = user.UserId,
+    Value = jsonString 
+});
 ```
 
-This example demonstrates creating an event that logs when a user is granted read and write privileges to a specific resource.
+This example demonstrates creating an event that logs when a user is granted read and write privileges to a specific resource and publishing the event to a Kafka topic using the Confluent.Kafka client.
