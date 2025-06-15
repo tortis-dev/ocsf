@@ -4,6 +4,12 @@
     <ProductName>Tortis OCSF SDK</ProductName>
     <Description>Provides a set of dotnet classes for creating OCSF events.</Description>
     <Copyright>2025 Tortis Dev and contributors.</Copyright>
+    <RepositoryUrl>https://github.com/tortis-dev/ocsf</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/tortis-dev/ocsf</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>OCSF, SIEM</PackageTags>
+    <Authors>jpenniman</Authors>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -15,13 +21,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0"/>
-    <PackageReference Include="PolySharp" Version="1.15.0" />
-    <PackageReference Include="System.Text.Json" Version="9.0.5" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" PrivateAssets="all" />
+    <PackageReference Include="PolySharp" Version="1.15.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net9.0'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="JetBrains.Annotations"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="/"/>
   </ItemGroup>
 </Project>
