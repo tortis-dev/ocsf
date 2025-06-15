@@ -1,7 +1,8 @@
 # Tortis OCSF
 
-![Build Status](https://github.com/jason/tortis/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/tortis-dev/ocsf/actions/workflows/ci.yml/badge.svg)
 
+![Known Vulnerabilities](https://snyk.io/test/github/tortis-dev/ocsf/badge.svg)
 
 A C#/.Net implementation of the Open Cybersecurity Schema Framework (OCSF) for creating security events in .Net applications for export to a SIEM.
 
