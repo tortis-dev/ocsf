@@ -36,19 +36,20 @@ jobs:
       - name: Test
         run: dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage"
       - name: Pack
-        run: dotnet pack ./TortisDev.Ocsf/TortisDev.Ocsf.csproj --no-build --configuration Release -o ./nupkg
+        if: github.ref == 'refs/heads/main'
+        run: dotnet pack ./TortisDev.Ocsf/TortisDev.Ocsf.csproj --no-build --configuration Release -o ./nupkg /p:PackageVersion=${{ steps.gitversion.outputs.semVer }}
       - name: Publish to NuGet
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
       - name: Create Git tag
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git tag v${{ steps.gitversion.outputs.semVer }}
           git push origin v${{ steps.gitversion.outputs.semVer }}
       - name: Create GitHub Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.gitversion.outputs.semVer }}
